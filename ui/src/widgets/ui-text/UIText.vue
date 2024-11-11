@@ -22,10 +22,10 @@ export default {
     computed: {
         ...mapState('data', ['messages', 'properties']),
         value: function () {
-            const m = this.messages[this.id] || {}
-            if (Object.prototype.hasOwnProperty.call(m, 'payload')) {
+            const p = this.getProperty('payload') || ''
+            if (p) {
                 // Sanetize the html to avoid XSS attacks
-                return DOMPurify.sanitize(m.payload)
+                return DOMPurify.sanitize(p)
             }
             return ''
         },
@@ -64,6 +64,7 @@ export default {
             this.updateDynamicProperty('font', updates.font)
             this.updateDynamicProperty('fontSize', updates.fontSize)
             this.updateDynamicProperty('color', updates.color)
+            this.updateDynamicProperty('payload', updates.payload)
         }
     }
 }
